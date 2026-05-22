@@ -1,6 +1,7 @@
 import allure
 import pytest
 
+from pages.main_page import MainPage
 from data import (
     ANSWER_TEXT_ONE,
     ANSWER_TEXT_TWO,
@@ -11,14 +12,12 @@ from data import (
     ANSWER_TEXT_SEVEN,
     ANSWER_TEXT_EIGHT,
 )
-from locators.questions import QuestionsLocators, AnswerLocators
-from pages.all_questions_section import QuestionsAndAnswers
+from locators.main_page_locators import QuestionsLocators, AnswerLocators
 
-
-@allure.title("Проверка всех вопросов и ответов на странице")
-@allure.description("Проверяем, что при клике на каждый вопрос открывается правильный ответ.")
 class TestAllQuestions:
 
+    @allure.title("Проверка всех вопросов и ответов на странице")
+    @allure.description("Проверяем, что при клике на каждый вопрос открывается правильный ответ.")
     @pytest.mark.parametrize(
         "question_locator, answer_locator, expected_text",
         [
@@ -32,10 +31,13 @@ class TestAllQuestions:
             (QuestionsLocators.EIGHTH_QUESTION, AnswerLocators.EIGHTH_ANSWER, ANSWER_TEXT_EIGHT),
         ],
     )
-    def test_question_answer(self, driver, browser_wait, question_locator, answer_locator, expected_text):
-        questions_page = QuestionsAndAnswers(driver)
+    def test_question_answer(self, driver, question_locator, answer_locator, expected_text):
+        main_page = MainPage(driver)
 
-        questions_page.open_question(browser_wait, question_locator)
-        actual_text = questions_page.get_answer_text(browser_wait, answer_locator)
+        main_page.open_question(question_locator)
+        actual_text = main_page.get_answer_text(answer_locator)
 
-        assert actual_text == expected_text, f"Текст ответа не совпадает с ожидаемым. Ожидалось: '{expected_text}', но получено: '{actual_text}'"
+        assert actual_text == expected_text, (
+            f"Ожидали текст ответа: '{expected_text}', "
+            f"но получили: '{actual_text}'"
+        )

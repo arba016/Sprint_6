@@ -2,7 +2,7 @@ import pytest
 
 from data import BASE_URL
 from selenium import webdriver
-from selenium.webdriver.support.wait import WebDriverWait
+
 
 
 @pytest.fixture
@@ -15,8 +15,4 @@ def driver():
     yield browser
 
     browser.quit()
-
-
-@pytest.fixture
-def browser_wait(driver):
-    return WebDriverWait(driver, 5)
+    

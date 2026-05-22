@@ -1,48 +1,48 @@
 import allure
 import pytest
 
-from data import BASE_URL, ORDER_DATA
-from pages.order_scooter_page import OrderScooterPage
-from pages.approve_window import ApproveWindow
-from pages.info_order_window import InfoOrderWindow
-from pages.about_rent import AboutRent
+from data import ORDER_DATA
+from pages.order_page import OrderPage
 from pages.main_page import MainPage
 
-
-@allure.parent_suite("UI-тесты")
-@allure.suite("Заказ самоката")
-@allure.feature("Проверка заказа самоката")
 class TestOrderScooter:
 
-    @allure.title("Заказ самоката")
-    @allure.description("Проверяем полный позитивный сценарий заказа самоката с разными данными и разными точками входа.")
+    @allure.title("Заказ самоката через верхнюю кнопку 'Заказать'")
+    @allure.description("Проверяем позитивный сценарий заказа через верхнюю кнопку.")
     @pytest.mark.parametrize(
-        "button_type, name, surname, address, phone, comment, color",
+        "name, surname, address, phone, comment",
         ORDER_DATA,
     )
-    def test_order_scooter(self, driver, browser_wait, button_type, name, surname, address, phone, comment, color):
-        driver.get(BASE_URL)
-
+    def test_order_scooter_from_top_button(
+        self, driver, name, surname, address, phone, comment
+    ):
         main_page = MainPage(driver)
+        order_page = OrderPage(driver)
 
-        if button_type == "top":
-            main_page.click_order_first_button()
-        elif button_type == "bottom":
-            main_page.scroll_to_second_order_button()
-            main_page.click_to_second_order_button()
+        main_page.click_top_order_button()
+        order_page.order_scooter(name, surname, address, phone, comment, color='black')
+        actual_text = order_page.get_complete_order_text()
 
-        order_page = OrderScooterPage(driver)
-        order_page.check_order_window(browser_wait)
-        order_page.order_scooter(name, surname, address, phone)
+        assert "Заказ оформлен" in actual_text, (
+            f"Ожидали, что в окне будет текст 'Заказ оформлен', "
+            f"но получили: '{actual_text}'"
+        )
 
-        about_rent = AboutRent(driver)
-        about_rent.complete_order(browser_wait, comment, color)
+    @allure.title("Заказ самоката через нижнюю кнопку 'Заказать'")
+    @allure.description("Проверяем позитивный сценарий заказа через нижнюю кнопку.")
+    @pytest.mark.parametrize(
+        "name, surname, address, phone, comment",
+        ORDER_DATA,
+    )
+    def test_order_scooter_from_bottom_button(
+        self, driver, name, surname, address, phone, comment
+    ):
+        main_page = MainPage(driver)
+        order_page = OrderPage(driver)
 
-        approve = ApproveWindow(driver)
-        approve.click_yes_button(browser_wait)
-
-        info_order_window = InfoOrderWindow(driver)
-        actual_text = info_order_window.get_complete_order_text(browser_wait)
+        main_page.click_bottom_order_button()
+        order_page.order_scooter(name, surname, address, phone, comment, color ='grey')
+        actual_text = order_page.get_complete_order_text()
 
         assert "Заказ оформлен" in actual_text, (
             f"Ожидали, что в окне будет текст 'Заказ оформлен', "
