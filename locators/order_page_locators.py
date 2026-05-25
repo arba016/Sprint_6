@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 class OrderPageLocators:
     NAME_INPUT = (By.CSS_SELECTOR, "input[placeholder='* Имя']")
     SURNAME_INPUT = (By.CSS_SELECTOR, "input[placeholder='* Фамилия']")
-    ADRESS_INPUT = (
+    ADDRESS_INPUT = (
         By.CSS_SELECTOR,
         "input[placeholder='* Адрес: куда привезти заказ']",
     )
@@ -18,7 +18,7 @@ class OrderPageLocators:
     ORDER_TITLE = (By.CLASS_NAME, "Order_Header__BZXOb")
     CALENDAR = (By.CLASS_NAME, "react-datepicker")
 
-class OrderPageAboutRentLocators:
+
     DATE_INPUT = (By.CSS_SELECTOR, "input[placeholder='* Когда привезти самокат']")
     RENTAL_PERIOD_BUTTON = (By.CLASS_NAME, "Dropdown-control")
     DAY = (By.XPATH, '//div[text()= "сутки"]')
@@ -37,10 +37,10 @@ class OrderPageAboutRentLocators:
         "//div[contains(@class, 'Order_Buttons')]//button[text()='Заказать']",
     )
 
-class ApproveOrderPageLocators:
+
     YES_BUTTON = (By.XPATH, "//button[text()='Да']")
     NO_BUTTON = (By.XPATH, "//button[text()='Нет']")
 
-class StatusOrderWindow:
+
     STATUS_ORDER_TEXT = (By.XPATH,
     "//div[contains(@class, 'Order_Modal') and contains(., 'Заказ оформлен')]")

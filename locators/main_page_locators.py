@@ -12,7 +12,7 @@ class MainPageLocators:
     SCOOTER_IMAGE = (By.CSS_SELECTOR, 'img[src="/assets/scooter.png"]')
     TEXT_SCOOTER = (By.CLASS_NAME, "Home_Header__iJKdX")
 
-class QuestionsLocators:
+
     FIRST_QUESTION = (By.ID, 'accordion__heading-0')
     SECOND_QUESTION = (By.ID, 'accordion__heading-1')
     THIRD_QUESTION = (By.ID, 'accordion__heading-2')
@@ -23,7 +23,7 @@ class QuestionsLocators:
     EIGHTH_QUESTION = (By.ID, 'accordion__heading-7')
 
 
-class AnswerLocators:
+
     FIRST_ANSWER = (By.ID, 'accordion__panel-0')
     SECOND_ANSWER = (By.ID, 'accordion__panel-1')
     THIRD_ANSWER = (By.ID, 'accordion__panel-2')
