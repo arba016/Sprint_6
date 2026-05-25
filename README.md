@@ -45,4 +45,6 @@ allure serve allure_results
 
 
 очистить прошлые результаты тестов
-Remove-Item -Recurse -Force allure_results#
+Remove-Item -Recurse -Force allure_results
+или
+rm -rf allure_results
